@@ -568,6 +568,16 @@
       flex-direction: column;
       box-shadow: 0 16px 48px rgba(0, 0, 0, 0.22);
     }
+    .content-frame-wrap.fullscreen-page {
+      height: calc(100dvh - var(--topbar-height) - 24px);
+      min-height: 0;
+      border-radius: 22px;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
+    }
+    .content-frame-wrap.fullscreen-page #content-frame {
+      height: 100%;
+      min-height: 0;
+    }
     .frame-titlebar {
       display: flex;
       align-items: center;
@@ -953,6 +963,12 @@
         <div class="sidebar-sub">
           <a href="#" id="ajiltan-link" data-page-key="Ажилтануудын мэдээлэл">Ажилтануудын мэдээлэл</a>
           <a href="#" id="sum-link" data-page-key="Суман шилжүүлгийн бүртгэл">Суман шилжүүлгийн бүртгэл</a>
+          <a href="#" data-page-key="Малтай айлын судалгаа">Малтай айлын судалгаа</a>
+          <a href="#" data-page-key="Гүүр, хоолойн судалгаа">Гүүр, хоолойн судалгаа</a>
+          <a href="#" data-page-key="ПУ-5 дэр модны судалгаа">ПУ-5 дэр модны судалгаа</a>
+          <a href="#" data-page-key="ПУ-2 зам төмрийн судалгаа">ПУ-2 зам төмрийн судалгаа</a>
+          <a href="#" data-page-key="Нөөц зам төмрийн судалгаа">Нөөц зам төмрийн судалгаа</a>
+          <a href="#" data-page-key="Уулзварын зайн судалгаа">Уулзварын зайн судалгаа</a>
         </div>
       </div>
 
@@ -1198,6 +1214,23 @@
     }
   }
 
+  const fullscreenPageKeys = new Set([
+    'Малтай айлын судалгаа',
+    'Гүүр, хоолойн судалгаа',
+    'ПУ-5 дэр модны судалгаа',
+    'ПУ-2 зам төмрийн судалгаа',
+    'Нөөц зам төмрийн судалгаа',
+    'Уулзварын зайн судалгаа'
+  ]);
+
+  function applyFrameDisplayMode(pageKey, frame) {
+    const wrap = frame ? frame.closest('.content-frame-wrap') : null;
+    if (!wrap) {
+      return;
+    }
+    wrap.classList.toggle('fullscreen-page', fullscreenPageKeys.has(pageKey));
+  }
+
   const staticPageFallbacks = {
       'Ирц бүртгэл': 'irts.html',
     'Өдөр тутмын зааварчилгаа': 'zoovorchilgoo.html',
@@ -1209,6 +1242,12 @@
     'Менежментийн нэгдсэн тогтолцоо': 'anhaar.html',
     'Ажилтануудын мэдээлэл': 'ajiltan.html',
     'Суман шилжүүлгийн бүртгэл': 'sum.html',
+    'Малтай айлын судалгаа': 'torZasagch.html',
+    'Гүүр, хоолойн судалгаа': 'isso.html',
+    'ПУ-5 дэр модны судалгаа': 'pu5.html',
+    'ПУ-2 зам төмрийн судалгаа': 'gemtelteiZT.html',
+    'Нөөц зам төмрийн судалгаа': 'nootsZT.html',
+    'Уулзварын зайн судалгаа': 'uZai.html',
     'ХАБЭА-н үзлэг': 'habea.html',
     'Паспортын үзлэг': 'passport.html',
     'Замын техникийн байдал': 'tech.html',
@@ -1610,6 +1649,7 @@
     const frame = document.getElementById('content-frame');
     const frameTitle = document.getElementById('frame-title-label');
     const titleText = clickedElement.textContent.trim().replace(/\s+/g, ' ');
+    applyFrameDisplayMode(pageKey, frame);
     frame.src = resolvePageSrc(pageKey, titleText);
     writeLastPage(pageKey);
     if (frameTitle) {
