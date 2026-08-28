@@ -951,7 +951,19 @@
       <div class="sidebar-divider"></div>
 
       <div class="sidebar-item">
-        <a href="#" class="sidebar-link danger-link" id="toggle-alert" data-page-key="Менежментийн нэгдсэн тогтолцоо">
+        <a href="#" class="sidebar-link danger-link" id="ajliinBvrtgel-link" data-page-key="Ажлын бүртгэл">
+          <i class="fa fa-sitemap"></i>Ажлын бүртгэл
+        </a>
+      </div>
+
+      <div class="sidebar-item">
+        <a href="#" class="sidebar-link danger-link" id="hural-link" data-page-key="Хурлын тэмдэглэл">
+          <i class="fa fa-sitemap"></i> Хурлын тэмдэглэл
+        </a>
+      </div>
+
+      <div class="sidebar-item">
+        <a href="#" class="sidebar-link danger-link" id="anhaar-link" data-page-key="Менежментийн нэгдсэн тогтолцоо">
           <i class="fa fa-sitemap"></i> Менежментийн нэгдсэн тогтолцоо
         </a>
       </div>
@@ -1220,7 +1232,9 @@
     'ПУ-5 дэр модны судалгаа',
     'ПУ-2 зам төмрийн судалгаа',
     'Нөөц зам төмрийн судалгаа',
-    'Уулзварын зайн судалгаа'
+    'Уулзварын зайн судалгаа',
+    'Ажлын бүртгэл',
+    'Хурлын тэмдэглэл'
   ]);
 
   function applyFrameDisplayMode(pageKey, frame) {
@@ -1239,6 +1253,8 @@
     'Төлөвлөгөө / Сарын ажлын төлөвлөгөө': 'sariin.html',
     'Шийдвэр': 'shiidwer.html',
     'Үүрэг даалгавар': 'ita.html',
+    'Ажлын бүртгэл': 'ajliinBvrtgel.html',
+    'Хурлын тэмдэглэл': 'hural.html',
     'Менежментийн нэгдсэн тогтолцоо': 'anhaar.html',
     'Ажилтануудын мэдээлэл': 'ajiltan.html',
     'Суман шилжүүлгийн бүртгэл': 'sum.html',
@@ -1627,13 +1643,12 @@
     document.querySelectorAll('.sidebar-link.active').forEach(function(link) {
       link.classList.remove('active');
     });
-    const alertLink = document.getElementById('toggle-alert');
-    if (alertLink) {
-      alertLink.classList.remove('active-alert');
-    }
+    document.querySelectorAll('.sidebar-link.active-alert').forEach(function(link) {
+      link.classList.remove('active-alert');
+    });
     if (activeLink && activeLink.classList.contains('sidebar-link')) {
       activeLink.classList.add('active');
-      if (activeLink.id === 'toggle-alert') {
+      if (activeLink.classList.contains('danger-link')) {
         activeLink.classList.add('active-alert');
       }
     }
